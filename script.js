@@ -4,6 +4,7 @@ function app() {
         maxSize: 16,
         summe: '',
         ergebnis: '',
+        isError: false,
         lang: 'en',
         translations: {
             de: {
@@ -32,6 +33,7 @@ function app() {
             const zahl = parseInt(this.zahl);
             const maxSize = parseInt(this.maxSize);
             if (isNaN(zahl) || zahl < 0 || isNaN(maxSize) || maxSize < 0) {
+                this.isError = true;
                 this.summe = '';
                 this.ergebnis = this.translations[this.lang].error;
                 return;
@@ -53,6 +55,7 @@ function app() {
             if (rest > 0) {
                 ergebnis += '\n(Rest: ' + rest + ')';
             }
+            this.isError = false;
             this.summe = zahl;
             this.ergebnis = ergebnis;
         }

@@ -34,7 +34,7 @@
                 <button id="splitButton" class="btn btn-primary w-100 mb-3" @click="calculateSplit()" x-text="translations[lang].button"></button>
 
                 <div id="summe" class="alert alert-info" aria-live="polite" x-show="summe" x-text="summe"></div>
-                <div id="ergebnis" class="alert alert-success" aria-live="polite" x-show="ergebnis" x-text="ergebnis"></div>
+                <div id="ergebnis" class="alert" :class="isError ? 'alert-danger' : 'alert-success'" aria-live="polite" x-show="ergebnis" x-text="ergebnis"></div>
             </div>
         </div>
     </div>
