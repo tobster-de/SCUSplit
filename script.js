@@ -1,74 +1,60 @@
-const translations = {
-    de: {
-        title: "Cargo-Aufteilung",
-        h1: "Cargo aufteilen",
-        labelZahl: "Anzahl SCUs",
-        labelMax: "Max. Container-Größe",
-        placeholderZahl: "Anzahl SCUs",
-        button: "Aufteilen",
-        error: "Bitte geben Sie gültige positive Zahlen ein.",
-    },
-    en: {
-        title: "Cargo Splitting",
-        h1: "Split Cargo",
-        labelZahl: "Number of SCUs",
-        labelMax: "Max. Container Size",
-        placeholderZahl: "Number of SCUs",
-        button: "Split",
-        error: "Please enter valid positive numbers.",
-    }
-};
-
-const lang = navigator.language.startsWith('de') ? 'de' : 'en';
-document.documentElement.lang = lang;
-document.title = translations[lang].title;
-document.querySelector('h1').innerText = translations[lang].h1;
-document.querySelector('label[for="zahlInput"]').innerText = translations[lang].labelZahl;
-document.querySelector('label[for="maxPotenz"]').innerText = translations[lang].labelMax;
-document.getElementById('zahlInput').placeholder = translations[lang].placeholderZahl;
-document.getElementById('splitButton').innerText = translations[lang].button;
-
-const zahlInput = document.getElementById('zahlInput');
-const splitButton = document.getElementById('splitButton');
-if (zahlInput) {
-    zahlInput.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') { 
-            e.preventDefault(); 
-            splitButton.click(); 
+function app() {
+    return {
+        zahl: '',
+        maxSize: 16,
+        summe: '',
+        ergebnis: '',
+        lang: 'en',
+        translations: {
+            de: {
+                title: "Cargo-Aufteilung",
+                header: "Cargo aufteilen",
+                labelZahl: "Anzahl SCUs",
+                labelMax: "Max. Container-Größe",
+                button: "Aufteilen",
+                error: "Bitte geben Sie gültige positive Zahlen ein.",
+            },
+            en: {
+                title: "Cargo Splitting",
+                header: "Split Cargo",
+                labelZahl: "Number of SCUs",
+                labelMax: "Max. Container Size",
+                button: "Split",
+                error: "Please enter valid positive numbers.",
+            }
+        },
+        init() {
+            this.lang = navigator.language.startsWith('de') ? 'de' : 'en';
+            document.documentElement.lang = this.lang;
+            document.title = this.translations[this.lang].title;
+        },
+        calculateSplit() {
+            const zahl = parseInt(this.zahl);
+            const maxSize = parseInt(this.maxSize);
+            if (isNaN(zahl) || zahl < 0 || isNaN(maxSize) || maxSize < 0) {
+                this.summe = '';
+                this.ergebnis = this.translations[this.lang].error;
+                return;
+            }
+            let rest = zahl;
+            let ergebnis = '';
+            let potenz = maxSize;
+            let teile = [];
+            while (rest > 0 && potenz >= 1) {
+                const anzahl = Math.floor(rest / potenz);
+                if (anzahl > 0) {
+                    teile.push(potenz + ' * ' + anzahl);
+                    const wert = anzahl * potenz;
+                    rest -= wert;
+                }
+                potenz /= 2;
+            }
+            ergebnis += teile.join('\n');
+            if (rest > 0) {
+                ergebnis += '\n(Rest: ' + rest + ')';
+            }
+            this.summe = zahl;
+            this.ergebnis = ergebnis;
         }
-    });
-}
-
-function aufteilen() {
-    const zahl = parseInt(document.getElementById('zahlInput').value);
-    const maxPotenz = parseInt(document.getElementById('maxPotenz').value);
-    if (isNaN(zahl) || zahl < 0 || isNaN(maxPotenz) || maxPotenz < 0) {
-        document.getElementById('ergebnis').innerText = translations[lang].error;
-        document.getElementById('ergebnis').style.display = 'block';
-        document.getElementById('summe').style.display = 'none';
-        return;
     }
-    let rest = zahl;
-    let ergebnis = '';
-    let potenz = maxPotenz;
-    let teile = [];
-    while (rest > 0 && potenz >= 1) {
-        const anzahl = Math.floor(rest / potenz);
-        if (anzahl > 0) {
-            teile.push(potenz + ' * ' + anzahl);
-            const wert = anzahl * potenz;
-            rest -= wert;
-        } else {
-            //teile.push('0*' + wert);
-        }
-        potenz /= 2;
-    }
-    ergebnis += teile.join('\n');
-    if (rest > 0) {
-        ergebnis +='\n(Rest: ' + rest + ')';
-    }
-    document.getElementById('summe').innerText = zahl;
-    document.getElementById('summe').style.display = 'block';
-    document.getElementById('ergebnis').innerText = ergebnis;
-    document.getElementById('ergebnis').style.display = 'block';
 }

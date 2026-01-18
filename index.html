@@ -2,24 +2,26 @@
 <html lang="de" data-bs-theme="dark">
 <head>
     <meta charset="UTF-8">
-    <title>Cargo-Aufteilung</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <script src="script.js"></script>
 </head>
-<body class="bg-dark text-light">
+<body class="bg-dark text-light" x-data="app()" x-init="init()">
     <div class="container mt-5">
         <div class="card bg-secondary text-light shadow">
             <div class="card-body">
-                <h1 class="card-title text-center mb-4">Cargo aufteilen</h1>
+                <h1 class="card-title text-center mb-4" x-text="translations[lang].header"></h1>
 
                 <div class="mb-3">
-                    <label for="zahlInput" class="form-label">Anzahl SCUs</label>
-                    <input type="number" class="form-control" id="zahlInput" placeholder="Anzahl SCUs" aria-label="Anzahl SCUs">
+                    <label for="zahlInput" class="form-label" x-text="translations[lang].labelZahl"></label>
+                    <input type="number" class="form-control" id="zahlInput" x-model="zahl" @keydown.enter="calculateSplit()" :placeholder="translations[lang].labelZahl" aria-label="Anzahl SCUs">
                 </div>
 
                 <div class="mb-3">
-                    <label for="maxPotenz" class="form-label">Max. Container-Größe</label>
-                    <select class="form-select" id="maxPotenz" aria-label="Max. Container-Größe">
+                    <label for="maxSize" class="form-label" x-text="translations[lang].labelMax"></label>
+                    <select class="form-select" id="maxSize" x-model="maxSize" aria-label="Max. Container-Größe">
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="4">4</option>
@@ -29,15 +31,12 @@
                     </select>
                 </div>
 
-                <button id="splitButton" class="btn btn-primary w-100 mb-3" onclick="aufteilen()">Aufteilen</button>
+                <button id="splitButton" class="btn btn-primary w-100 mb-3" @click="calculateSplit()" x-text="translations[lang].button"></button>
 
-                <div id="summe" class="alert alert-info" aria-live="polite" style="display: none;"></div>
-                <div id="ergebnis" class="alert alert-success" aria-live="polite" style="display: none;"></div>
+                <div id="summe" class="alert alert-info" aria-live="polite" x-show="summe" x-text="summe"></div>
+                <div id="ergebnis" class="alert alert-success" aria-live="polite" x-show="ergebnis" x-text="ergebnis"></div>
             </div>
         </div>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="script.js"></script>
 </body>
 </html>
