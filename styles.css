@@ -22,5 +22,9 @@ body {
     width: 100%;
     box-sizing: border-box;
 }
-#summe { white-space: pre-wrap; margin-top: 8px; font-weight: bold; font-size: large; }
-#ergebnis { white-space: pre-wrap; margin-top: 4px; }
+#summe, #ergebnis {
+    white-space: pre-wrap;
+    margin-top: 8px;
+    font-weight: bold;
+    font-size: large;
+}

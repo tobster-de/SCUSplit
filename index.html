@@ -1,33 +1,43 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="de" data-bs-theme="dark">
 <head>
     <meta charset="UTF-8">
     <title>Cargo-Aufteilung</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
-<body>
-    <main class="container" role="main">
-        <h1 style="margin:0 0 8px 0;">Cargo aufteilen</h1>
+<body class="bg-dark text-light">
+    <div class="container mt-5">
+        <div class="card bg-secondary text-light shadow">
+            <div class="card-body">
+                <h1 class="card-title text-center mb-4">Cargo aufteilen</h1>
 
-        <label for="zahlInput">Anzahl SCUs</label>
-        <input type="number" id="zahlInput" placeholder="Anzahl SCUs" aria-label="Anzahl SCUs">
+                <div class="mb-3">
+                    <label for="zahlInput" class="form-label">Anzahl SCUs</label>
+                    <input type="number" class="form-control" id="zahlInput" placeholder="Anzahl SCUs" aria-label="Anzahl SCUs">
+                </div>
 
-        <label for="maxPotenz">Max. Container-Größe</label>
-        <select id="maxPotenz" aria-label="Max. Container-Größe">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="4">4</option>
-            <option value="8">8</option>
-            <option value="16">16</option>
-            <option value="32">32</option>
-        </select>
+                <div class="mb-3">
+                    <label for="maxPotenz" class="form-label">Max. Container-Größe</label>
+                    <select class="form-select" id="maxPotenz" aria-label="Max. Container-Größe">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="4">4</option>
+                        <option value="8">8</option>
+                        <option value="16">16</option>
+                        <option value="32">32</option>
+                    </select>
+                </div>
 
-        <button id="splitButton" onclick="aufteilen()">Aufteilen</button>
+                <button id="splitButton" class="btn btn-primary w-100 mb-3" onclick="aufteilen()">Aufteilen</button>
 
-        <div id="summe" aria-live="polite"></div>
-        <div id="ergebnis" aria-live="polite"></div>
-    </main>
+                <div id="summe" class="alert alert-info" aria-live="polite"></div>
+                <div id="ergebnis" class="alert alert-success" aria-live="polite"></div>
+            </div>
+        </div>
+    </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
